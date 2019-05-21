@@ -14,8 +14,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.internal.matchers.Equals;
 
-import static org.hamcrest.Matchers.equalTo;
+
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -45,6 +47,9 @@ public class TodoDaoTest {
         TodoItem todoItem = new TodoItem("Exist",new Date(1977,3,8,7,3),false);
         todoDao.insert(todoItem);
         List<TodoItem> all = todoDao.getAll();
-        assertThat(all.get(0),equalTo(todoItem));
+        TodoItem result = all.get(0);
+        assertThat(result.getText(), equalTo("Exist"));
+        assertThat(result.getDateTime(),equalTo(new Date(1977,3,8,7,3)));
+        assertThat(result.isDone(),equalTo(false));
     }
 }
