@@ -1,4 +1,4 @@
-package com.nbehary.percipiatodo;
+package com.nbehary.heartbeat;
 
 import org.junit.Test;
 

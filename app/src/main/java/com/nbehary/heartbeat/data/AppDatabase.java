@@ -1,4 +1,4 @@
-package com.nbehary.percipiatodo.data;
+package com.nbehary.heartbeat.data;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(entities = {TodoItem.class},version = 1)
-@TypeConverters(com.nbehary.percipiatodo.data.TypeConverters.class)
+@TypeConverters(com.nbehary.heartbeat.data.TypeConverters.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract TodoDao todoDao();

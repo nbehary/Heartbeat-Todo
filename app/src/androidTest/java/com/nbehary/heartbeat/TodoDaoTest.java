@@ -1,11 +1,12 @@
-package com.nbehary.percipiatodo;
+package com.nbehary.heartbeat;
 
 import android.content.Context;
 
-import com.nbehary.percipiatodo.data.AppDatabase;
-import com.nbehary.percipiatodo.data.TodoDao;
-import com.nbehary.percipiatodo.data.TodoItem;
+import com.nbehary.heartbeat.data.AppDatabase;
+import com.nbehary.heartbeat.data.TodoDao;
+import com.nbehary.heartbeat.data.TodoItem;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -14,7 +15,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.Equals;
 
 
 import static org.hamcrest.core.IsEqual.equalTo;

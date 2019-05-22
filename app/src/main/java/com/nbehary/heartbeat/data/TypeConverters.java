@@ -1,4 +1,4 @@
-package com.nbehary.percipiatodo.data;
+package com.nbehary.heartbeat.data;
 
 import androidx.room.TypeConverter;
 
