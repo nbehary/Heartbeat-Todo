@@ -5,13 +5,15 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.nbehary.heartbeat.model.TodoViewModel;
+
 import java.util.List;
 
 //This doesn't do much.  Good to set it up for further enhancements though.
 
 public class TodoRepository {
     private TodoDao todoDao;
-    private List<TodoItem> allTodos;
+    private LiveData<List<TodoItem>> allTodos;
 
     public  TodoRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -19,7 +21,7 @@ public class TodoRepository {
         allTodos= todoDao.getAll();
     }
 
-    public List<TodoItem> getAllTodos(){
+    public LiveData<List<TodoItem>> getAllTodos(){
         return allTodos;
     }
 
@@ -30,6 +32,8 @@ public class TodoRepository {
     public void update(TodoItem item){
         new updateAsyncTask(todoDao).execute(item);
     }
+
+    public LiveData<TodoItem> get(Long id) {return todoDao.findTodoById(id);}
 
     private static class updateAsyncTask extends AsyncTask<TodoItem,Void,Void>{
 

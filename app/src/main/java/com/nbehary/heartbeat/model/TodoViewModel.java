@@ -13,7 +13,7 @@ import java.util.List;
 public class TodoViewModel extends AndroidViewModel {
 
     private TodoRepository repository;
-    private List<TodoItem> allTodos;
+    private LiveData<List<TodoItem>> allTodos;
 
     public TodoViewModel(Application application){
         super(application);
@@ -21,10 +21,14 @@ public class TodoViewModel extends AndroidViewModel {
         allTodos = repository.getAllTodos();
     }
 
-    List<TodoItem> getAllTodos() {return allTodos;};
+    public LiveData<List<TodoItem>> getAllTodos() {return allTodos;};
 
     public void insert(TodoItem item) {repository.insert(item);}
 
     public void update(TodoItem item) {repository.update(item);}
+
+    public LiveData<TodoItem> get(Long id){
+        return repository.get(id);
+    }
 
 }

@@ -15,7 +15,7 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 public interface TodoDao {
 
     @Query("SELECT * FROM todo")
-    List<TodoItem> getAll();
+    LiveData<List<TodoItem>> getAll();
 
     @Insert(onConflict = REPLACE)
     void insert(TodoItem item);
@@ -23,7 +23,13 @@ public interface TodoDao {
     @Update(onConflict = REPLACE)
     void update(TodoItem item);
 
+    @Query("DELETE FROM todo")
+    void deleteAll();
+
     @Delete
     void delete(TodoItem item);
+
+    @Query("SELECT * FROM todo WHERE id= :id")
+    LiveData<TodoItem> findTodoById(Long id);
 
 }
