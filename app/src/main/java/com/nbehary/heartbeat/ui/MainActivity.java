@@ -3,7 +3,6 @@ package com.nbehary.heartbeat.ui;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.nbehary.heartbeat.R;
 import com.nbehary.heartbeat.data.TodoItem;
 import com.nbehary.heartbeat.model.TodoViewModel;
@@ -11,7 +10,6 @@ import com.nbehary.heartbeat.model.TodoViewModel;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;

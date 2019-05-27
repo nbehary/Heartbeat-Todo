@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -40,6 +39,7 @@ public class EditDialogFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.fragment_dialog, container, false);
         final TextView titleText = view.findViewById(R.id.editTodoTitle);
         final EditText editText = view.findViewById(R.id.editTodoText);
+
         final TodoViewModel viewModel = ViewModelProviders.of(getActivity()).get(TodoViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null){
@@ -62,7 +62,9 @@ public class EditDialogFragment extends DialogFragment {
             }
 
         }
-
+        if (savedInstanceState != null){
+            editText.setText(savedInstanceState.getString("edit_text"));
+        }
         Button button = view.findViewById(R.id.editDialogButton);
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -77,5 +79,13 @@ public class EditDialogFragment extends DialogFragment {
         });
         return view;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        EditText editText = getView().findViewById(R.id.editTodoText);
+        outState.putString("edit_text", editText.getText().toString());
+    }
+
 
 }
