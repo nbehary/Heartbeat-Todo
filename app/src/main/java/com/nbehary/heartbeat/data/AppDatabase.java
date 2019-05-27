@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
             ourInstance = Room.databaseBuilder(ctx.getApplicationContext(),
                     AppDatabase.class, "todo_database")
                     .fallbackToDestructiveMigration()
-//                    .addCallback(sRoomDatabaseCallback)
+                    .addCallback(sRoomDatabaseCallback)
                     .build();
         }
         return ourInstance;
@@ -52,7 +52,7 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             todoDao.deleteAll();
-            TodoItem item = new TodoItem("Task 1",new Date(119,1,1,7,55),false);
+            TodoItem item = new TodoItem("Task 1",new Date(120,1,1,7,55),false);
             todoDao.insert(item);
             item = new TodoItem("Task 2",new Date(112,2,12,5,23),false);
             todoDao.insert(item);

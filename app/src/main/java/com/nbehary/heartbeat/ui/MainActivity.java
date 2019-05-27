@@ -39,18 +39,18 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.mr_list);
         TodoViewModel viewModel = ViewModelProviders.of(this).get(TodoViewModel.class);
         listItems = viewModel.getAllTodos();
-        final TodoItemRecyclerViewAdapter adapter = new TodoItemRecyclerViewAdapter(listItems.getValue());
+        final TodoItemRecyclerViewAdapter adapter = new TodoItemRecyclerViewAdapter(this,listItems.getValue());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         viewModel.getAllTodos().observe(this, new Observer<List<TodoItem>>() {
             @Override
             public void onChanged(List<TodoItem> todoItems) {
-                Log.d("MainActivity","onChanged called");
+                Log.e("MainActivity","onChanged called");
                 adapter.setValues(todoItems);
             }
         });
-        SwipeController swipeController = new SwipeController();
-        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
         itemTouchhelper.attachToRecyclerView(recyclerView);
 
         setSupportActionBar(toolbar);

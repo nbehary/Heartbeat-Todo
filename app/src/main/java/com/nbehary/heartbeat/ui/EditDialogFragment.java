@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
@@ -37,6 +38,7 @@ public class EditDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_dialog, container, false);
+        final TextView titleText = view.findViewById(R.id.editTodoTitle);
         final EditText editText = view.findViewById(R.id.editTodoText);
         final TodoViewModel viewModel = ViewModelProviders.of(getActivity()).get(TodoViewModel.class);
         Bundle bundle = getArguments();
@@ -45,6 +47,7 @@ public class EditDialogFragment extends DialogFragment {
             if (bundle.getBoolean("NEW")){
                 itemToEdit = new TodoItem("", new Date(),false);
                 editText.setText(itemToEdit.getText());
+                titleText.setText("New TODO Item");
                 isNew = true;
             } else {
                 viewModel.get(id).observe(this, new Observer<TodoItem>() {
@@ -52,6 +55,7 @@ public class EditDialogFragment extends DialogFragment {
                     public void onChanged(TodoItem todoItem) {
                         itemToEdit = todoItem;
                         editText.setText(itemToEdit.getText());
+                        titleText.setText("Edit TODO Item");
 
                     }
                 });

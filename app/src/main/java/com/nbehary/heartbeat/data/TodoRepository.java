@@ -33,6 +33,8 @@ public class TodoRepository {
         new updateAsyncTask(todoDao).execute(item);
     }
 
+    public void delete(TodoItem item) { new deleteAsyncTask(todoDao).execute(item); }
+
     public LiveData<TodoItem> get(Long id) {return todoDao.findTodoById(id);}
 
     private static class updateAsyncTask extends AsyncTask<TodoItem,Void,Void>{
@@ -61,6 +63,21 @@ public class TodoRepository {
         @Override
         protected Void doInBackground(final TodoItem... params){
             asyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<TodoItem,Void,Void>{
+
+        private TodoDao asyncTaskDao;
+
+        deleteAsyncTask(TodoDao dao){
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final TodoItem... params){
+            asyncTaskDao.delete(params[0]);
             return null;
         }
     }

@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 
 import com.nbehary.heartbeat.R;
 import com.nbehary.heartbeat.data.TodoItem;
+import com.nbehary.heartbeat.model.TodoViewModel;
 
 
 import java.text.DateFormat;
@@ -26,9 +30,12 @@ public class TodoItemRecyclerViewAdapter extends RecyclerView.Adapter<TodoItemRe
 {
 
     private List<TodoItem> values;
+    private Context context;
 
-    public TodoItemRecyclerViewAdapter(List<TodoItem> items) {
+    public TodoItemRecyclerViewAdapter(Context ctx,List<TodoItem> items)
+    {
         values = items;
+        context = ctx;
     }
 
     @Override
@@ -45,6 +52,8 @@ public class TodoItemRecyclerViewAdapter extends RecyclerView.Adapter<TodoItemRe
         //holder.mIdView.setText(values.get(position).getText());
         holder.textView.setText(holder.item.getText());
         holder.timeView.setText(DateFormat.getDateTimeInstance().format(holder.item.getDateTime()));
+
+
 
         Log.d("9087","onBindViewHolder!");
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +80,27 @@ public class TodoItemRecyclerViewAdapter extends RecyclerView.Adapter<TodoItemRe
         }
     }
 
+    public void deleteItem(int position){
+        TodoViewModel viewModel = ViewModelProviders.of((AppCompatActivity)context).get(TodoViewModel.class);
+        viewModel.delete(values.get(position));
+        values.remove(position);
+        notifyItemRemoved(position);
+
+    }
+
+    public TodoItem getItem(int position){
+        return values.get(position);
+
+    }
+
     public void setValues(List<TodoItem> values){
         Log.d("1234", "setValues called");
         this.values = values;
         notifyDataSetChanged();
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

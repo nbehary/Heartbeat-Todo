@@ -27,6 +27,8 @@ public class TodoViewModel extends AndroidViewModel {
 
     public void update(TodoItem item) {repository.update(item);}
 
+    public void delete(TodoItem item) {repository.delete(item);}
+
     public LiveData<TodoItem> get(Long id){
         return repository.get(id);
     }

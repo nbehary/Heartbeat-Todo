@@ -14,7 +14,7 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface TodoDao {
 
-    @Query("SELECT * FROM todo")
+    @Query("SELECT * FROM todo ORDER BY date_time DESC")
     LiveData<List<TodoItem>> getAll();
 
     @Insert(onConflict = REPLACE)
