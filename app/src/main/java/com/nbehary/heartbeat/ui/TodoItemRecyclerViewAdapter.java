@@ -3,9 +3,7 @@ package com.nbehary.heartbeat.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,9 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.nbehary.heartbeat.R;
 import com.nbehary.heartbeat.data.TodoItem;
 import com.nbehary.heartbeat.model.TodoViewModel;
@@ -30,12 +28,13 @@ public class TodoItemRecyclerViewAdapter extends RecyclerView.Adapter<TodoItemRe
 {
 
     private List<TodoItem> values;
-    private Context context;
+    private TodoItem recentlyDeleted;
+    private MainActivity activity;
 
-    public TodoItemRecyclerViewAdapter(Context ctx,List<TodoItem> items)
+    public TodoItemRecyclerViewAdapter(MainActivity ctx,List<TodoItem> items)
     {
         values = items;
-        context = ctx;
+        activity = ctx;
     }
 
     @Override
@@ -52,10 +51,6 @@ public class TodoItemRecyclerViewAdapter extends RecyclerView.Adapter<TodoItemRe
         //holder.mIdView.setText(values.get(position).getText());
         holder.textView.setText(holder.item.getText());
         holder.timeView.setText(DateFormat.getDateTimeInstance().format(holder.item.getDateTime()));
-
-
-
-        Log.d("9087","onBindViewHolder!");
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,11 +76,28 @@ public class TodoItemRecyclerViewAdapter extends RecyclerView.Adapter<TodoItemRe
     }
 
     public void deleteItem(int position){
-        TodoViewModel viewModel = ViewModelProviders.of((AppCompatActivity)context).get(TodoViewModel.class);
-        viewModel.delete(values.get(position));
-        values.remove(position);
-        notifyItemRemoved(position);
+        TodoViewModel viewModel = ViewModelProviders.of((AppCompatActivity) activity).get(TodoViewModel.class);
+        recentlyDeleted = values.get(position);
+        viewModel.delete(recentlyDeleted);
+        showUndoSnackbar();
+    }
 
+    private void showUndoSnackbar(){
+        View view = activity.findViewById(R.id.activity_main);
+        Snackbar snackbar = Snackbar.make(view,R.string.undo_delete_text, Snackbar.LENGTH_LONG);
+        snackbar.setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TodoItemRecyclerViewAdapter.this.undoDelete();
+            }
+        });
+        snackbar.show();
+
+    }
+
+    private void undoDelete(){
+        TodoViewModel viewModel = ViewModelProviders.of((AppCompatActivity) activity).get(TodoViewModel.class);
+        viewModel.insert(recentlyDeleted);
     }
 
     public TodoItem getItem(int position){
@@ -94,13 +106,12 @@ public class TodoItemRecyclerViewAdapter extends RecyclerView.Adapter<TodoItemRe
     }
 
     public void setValues(List<TodoItem> values){
-        Log.d("1234", "setValues called");
         this.values = values;
         notifyDataSetChanged();
     }
 
-    public Context getContext() {
-        return context;
+    public Context getActivity() {
+        return activity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

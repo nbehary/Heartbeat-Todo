@@ -1,12 +1,9 @@
 package com.nbehary.heartbeat.ui;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -15,8 +12,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nbehary.heartbeat.R;
-
-import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
 
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
@@ -29,7 +24,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     public SwipeToDeleteCallback(TodoItemRecyclerViewAdapter adapter) {
         super(0, ItemTouchHelper.LEFT );
         this.adapter = adapter;
-        icon = ContextCompat.getDrawable(this.adapter.getContext(), R.drawable.ic_delete_black_36dp);
+        icon = ContextCompat.getDrawable(this.adapter.getActivity(), R.drawable.ic_delete_black_36dp);
         background = new ColorDrawable(Color.WHITE);
     }
 

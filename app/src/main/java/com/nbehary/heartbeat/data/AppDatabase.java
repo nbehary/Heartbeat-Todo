@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
             ourInstance = Room.databaseBuilder(ctx.getApplicationContext(),
                     AppDatabase.class, "todo_database")
                     .fallbackToDestructiveMigration()
-                    .addCallback(sRoomDatabaseCallback)
+//                    .addCallback(sRoomDatabaseCallback)
                     .build();
         }
         return ourInstance;

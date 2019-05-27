@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.nbehary.heartbeat.data.TodoItem;
 import com.nbehary.heartbeat.data.TodoRepository;
